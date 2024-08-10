@@ -1,0 +1,115 @@
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.signup-form {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid var(--black-color);
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #ddd;
+}
+
+.signup-form h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--black-color);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 230px;
+    height: 55px !important;
+}
+
+.form-group label {
+    position: relative;
+    top: -27px;
+    left: 5px;
+    color: var(--gray-color);
+    transition: 0.3s ease;
+}
+
+.form-group input {
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid var(--dark-orange-color);
+    line-height: 1.5rem;
+    font-size: 1rem;
+    padding: 5px;
+    z-index: 10;
+}
+
+.form-group input:focus,
+.form-group input:valid {
+    border-bottom: 2px solid var(--orange-color);
+}
+
+.form-group input:focus + label,
+.form-group input:valid + label {
+    top: -10px;
+    left: 5px;
+    font-size: 0.8rem;
+    width: fit-content;
+    color: var(--orange-color);
+    padding: 0 5px;
+    background-color: white;
+    transition: 0.3s ease;
+    z-index: 20;
+}
+
+.password-group {
+    display: flex;
+    justify-self: start;
+    align-items: flex-start;
+    position: relative;
+}
+
+.show-pass-icon {
+    position: absolute;
+    top: 35%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-color);
+    font-size: 1rem;
+    z-index: 30;
+}
+
+.submit-button {
+    background-color: var(--orange-color);
+    color: white;
+    outline: none;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: var(--dark-orange-color);
+    cursor: pointer;
+}
+
+.auth-link {
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.auth-link a {
+    color: var(--blue-color);
+}
