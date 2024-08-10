@@ -6,7 +6,7 @@
     height: 100vh;
 }
 
-.signup-form {
+.auth-form {
     width: 320px;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@
     box-shadow: 5px 5px 5px #ddd;
 }
 
-.signup-form h1 {
+.auth-form h1 {
     font-size: 1.5rem;
     font-weight: 500;
     color: var(--black-color);
@@ -97,7 +97,7 @@
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .submit-button:hover {
@@ -106,7 +106,7 @@
 }
 
 .auth-link {
-    margin-top: 10px;
+    margin-top: 20px;
     padding: 5px;
 }
 
