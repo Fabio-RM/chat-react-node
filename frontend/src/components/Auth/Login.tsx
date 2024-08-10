@@ -38,7 +38,7 @@ const Login = () => {
                 
                 <button className="submit-button" type="submit">Login</button>
                 <span className='auth-link'>
-                    Don't have an account yet? <Link to="/login" >Sign Up</Link>
+                    Don't have an account yet? <Link to="/signup" >Sign Up</Link>
                 </span>
             </form>
         </div>
