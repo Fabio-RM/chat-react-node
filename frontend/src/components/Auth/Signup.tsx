@@ -33,7 +33,9 @@ const FormSchema = yup.object().shape({
 function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [backendErrorMessage, setBackendErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
+
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
         mode: 'onSubmit',
         resolver: yupResolver(FormSchema),
@@ -48,13 +50,13 @@ function Signup() {
                 password: data.password,
             });
 
-            if (response.status === 201 || response.status === 200) {
+            if (response.data.success) {
                 navigate('/login');
             } else {
                 console.error('Error when registering', response.data);
             }
-        } catch (error) {
-            console.error('Error when registering', error);
+        } catch (error: any) {
+            setBackendErrorMessage(error.response.data.message);
         }
             
     }
@@ -116,6 +118,7 @@ function Signup() {
                           }
                     </span>
                     <p className='form-errors'>{ errors && errors.confirmPassword?.message }</p>
+                    <p className='form-errors form-backend-errors'>{ backendErrorMessage && backendErrorMessage }</p>
                 </div>
                 <button className="submit-button" type="submit" disabled={isSubmitting}>
                     { isSubmitting ? "Submitting..." : "Sign up" }
