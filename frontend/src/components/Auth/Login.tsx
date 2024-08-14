@@ -43,8 +43,10 @@ const Login = () => {
             } else {
                 console.error(response);
             }
-        } catch (error: any) {
-            setBackendErrorMessage(error.response.data.message);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                setBackendErrorMessage(error.response?.data.message);
+            }
         }
     }
 

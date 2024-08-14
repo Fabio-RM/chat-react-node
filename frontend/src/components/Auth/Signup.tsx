@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import '../../assets/styles/auth.css';
@@ -55,8 +54,10 @@ function Signup() {
             } else {
                 console.error('Error when registering', response.data);
             }
-        } catch (error: any) {
-            setBackendErrorMessage(error.response.data.message);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                setBackendErrorMessage(error.response?.data.message);
+            }
         }
             
     }
