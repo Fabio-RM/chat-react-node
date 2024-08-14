@@ -116,6 +116,11 @@
 
 .form-errors {
     font-size: 0.7rem;
-    margin-top: -8px;
+    margin-top: -5px;
     color: red;
+}
+
+.form-backend-errors {
+    text-align: center;
+    margin-top: 0px;
 }
