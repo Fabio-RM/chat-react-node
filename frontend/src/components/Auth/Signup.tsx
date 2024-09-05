@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
+import axiosInstance from '../../api/axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
@@ -78,7 +78,7 @@ function Signup() {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/api/v1/users/create', 
+            const response = await axiosInstance.post('/users/create', 
                 formData, 
                 { 
                     headers: {
@@ -91,9 +91,7 @@ function Signup() {
                 console.error('Error when registering', response.data);
             }
         } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                setBackendErrorMessage(error.response?.data.message);
-            }
+            setBackendErrorMessage(error as string);
         }
             
     }

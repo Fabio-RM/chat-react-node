@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import axiosInstance from '../../api/axios';
 import '../../assets/styles/auth.css';
 
 type FormValues = {
@@ -32,7 +32,7 @@ const Login = () => {
 
     const handleFormSubmit: SubmitHandler<FormValues> = async (data) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/v1/users/login', {
+            const response = await axiosInstance.post('/users/login', {
                 email: data.email,
                 password: data.password,
             });
@@ -44,9 +44,7 @@ const Login = () => {
                 console.error(response);
             }
         } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                setBackendErrorMessage(error.response?.data.message);
-            }
+            setBackendErrorMessage(error as string);
         }
     }
 
