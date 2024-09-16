@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+
 import axiosInstance from '../../api/axios';
+import { useAuth } from '../../hooks/useAuth';
+
 import '../../assets/styles/auth.css';
 
 type FormValues = {
@@ -19,8 +24,11 @@ const FormSchema = yup.object().shape({
 });
 
 const Login = () => {
+    const { setAuth } = useAuth();
+    const navigate = useNavigate();    
     const [showPassword, setShowPassword] = useState(false);
     const [backendErrorMessage, setBackendErrorMessage] = useState<string | null>(null);
+
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
         mode: 'onSubmit',
         defaultValues: {
@@ -35,11 +43,20 @@ const Login = () => {
             const response = await axiosInstance.post('/users/login', {
                 email: data.email,
                 password: data.password,
+            }, 
+            {
+                withCredentials: true,
             });
 
             
             if (response.data.success) {
-                localStorage.setItem('token', response.data.token);
+                const email = data.email;
+                const password = data.password;
+                const token = response.data.accessToken;
+
+                setAuth({ email, password, token });
+
+                navigate('/chat');
             } else {
                 console.error(response);
             }
