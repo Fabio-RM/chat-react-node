@@ -3,7 +3,7 @@ import Signup from "./components/Auth/Signup"
 import Login from "./components/Auth/Login"
 import Chat from "./components/Chat/Chat"
 import { AuthProvider } from './context/AuthContext'
-import RequireAuth from "./components/Auth/RequireAuth"
+import ProtectedRoute from "./components/Auth/ProtectedRoute"
 
 
 function App() {
@@ -15,9 +15,14 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
 
-					<Route element={<RequireAuth />}>
-						<Route path="/chat" element={<Chat />} />
-					</Route>
+					<Route 
+        				path="/chat" 
+						element={
+						<ProtectedRoute>
+							<Chat />
+						</ProtectedRoute>
+						} 
+      				/>
 				</Routes>
 			</AuthProvider>
 		</BrowserRouter>

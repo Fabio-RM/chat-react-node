@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -8,12 +8,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-import axiosInstance from '../../api/axios';
-import { useAuth } from '../../hooks/useAuth';
+import AuthContext from '../../context/AuthContext';
 
 import '../../assets/styles/auth.css';
 
-type FormValues = {
+type FormData = {
     email: string;
     password: string;
 }
@@ -23,13 +22,14 @@ const FormSchema = yup.object().shape({
     password: yup.string().required('Password is required'),
 });
 
+
 const Login = () => {
-    const { setAuth } = useAuth();
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();    
     const [showPassword, setShowPassword] = useState(false);
     const [backendErrorMessage, setBackendErrorMessage] = useState<string | null>(null);
 
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
         mode: 'onSubmit',
         defaultValues: {
             email: '',
@@ -38,28 +38,11 @@ const Login = () => {
         resolver: yupResolver(FormSchema),
     })
 
-    const handleFormSubmit: SubmitHandler<FormValues> = async (data) => {
+    
+    const handleFormSubmit: SubmitHandler<FormData> = (data: FormData) => {
         try {
-            const response = await axiosInstance.post('/users/login', {
-                email: data.email,
-                password: data.password,
-            }, 
-            {
-                withCredentials: true,
-            });
-
-            
-            if (response.data.success) {
-                const email = data.email;
-                const password = data.password;
-                const token = response.data.accessToken;
-
-                setAuth({ email, password, token });
-
-                navigate('/chat');
-            } else {
-                console.error(response);
-            }
+            login(data.email, data.password)
+            navigate('/chat');
         } catch (error: unknown) {
             setBackendErrorMessage(error as string);
         }

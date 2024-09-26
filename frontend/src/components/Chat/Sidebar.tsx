@@ -1,9 +1,14 @@
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGear, faMagnifyingGlass, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import '../../assets/styles/chat-sidebar.css'
 
 
 function Sidebar() {
+    const { logout } = useContext(AuthContext);
+
+
     return (
         <nav className="chat-sidebar">
             <div className="chat-contacts">
@@ -35,7 +40,7 @@ function Sidebar() {
                         <span className="option-icon"><FontAwesomeIcon icon={faGear} /></span>
                         <span className="option-name">Configuration</span>
                     </li>
-                    <li className="option-container">
+                    <li className="option-container" onClick={() => logout()}>
                         <span className="option-icon logout-icon"><FontAwesomeIcon icon={faRightFromBracket} /></span>
                         <span className="option-name">Logout</span>
                     </li>

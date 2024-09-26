@@ -78,7 +78,7 @@ function Signup() {
         }
 
         try {
-            const response = await axiosInstance.post('/users/create', 
+            const response = await axiosInstance.post('/create', 
                 formData, 
                 { 
                     headers: {
